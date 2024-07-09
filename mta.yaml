@@ -1,0 +1,92 @@
+_schema-version: "3.2"
+ID: docxtraction
+version: 0.0.1
+modules:
+- name: docxtraction-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: docxtraction-destination-service
+    parameters:
+      content-target: true
+  - name: docxtraction_html_repo_host
+    parameters:
+      service-key:
+        name: docxtraction_html_repo_host-key
+  - name: uaa_docxtraction
+    parameters:
+      service-key:
+        name: uaa_docxtraction-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: docxtraction_docxtraction_html_repo_host
+          ServiceInstanceName: docxtraction-html5-app-host-service
+          ServiceKeyName: docxtraction_html_repo_host-key
+          sap.cloud.service: docxtraction
+        - Authentication: OAuth2UserTokenExchange
+          Name: docxtraction_uaa_docxtraction
+          ServiceInstanceName: docxtraction-xsuaa-service
+          ServiceKeyName: uaa_docxtraction-key
+          sap.cloud.service: docxtraction
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: docxtraction-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: docxtraction_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comdocxtractiondocxtraction.zip
+      name: comdocxtractiondocxtraction
+      target-path: resources/
+- name: comdocxtractiondocxtraction
+  type: html5
+  path: docxtraction
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: docxtraction-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: docxtraction-destination-service
+    service-plan: lite
+- name: docxtraction_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: docxtraction-html5-app-host-service
+    service-plan: app-host
+- name: uaa_docxtraction
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: docxtraction-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo

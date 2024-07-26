@@ -13,7 +13,7 @@
       "source": "^/sap_process_destinatiion/(.*)$",
       "target": "/$1",
       "destination": "sap_process_destinatiion",
-      "authenticationType": "xsuaa",
+      "authenticationType": "none",
       "csrfProtection": false
     },
     {

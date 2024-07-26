@@ -34,6 +34,9 @@ sap.ui.define([
             });
             this.getView().setModel(oModel);
 
+
+            
+
         },
         OnSelectionChange: function (oEvent) {
             console.log("clicked");
@@ -96,56 +99,16 @@ sap.ui.define([
             }
         },
 
-        // onSave: function () {
-        //     const url = this._getBaseUrlOfProcess()+ "/public/workflow/rest/v1/workflow-instances";
-        //     const grossAmount = parseFloat(this.getView().byId("grossAmount").getValue());
-	    //     const invoiceNumber = parseInt(this.getView().byId("documentNumber").getValue(), 10);
-        //     let payload = {
-        //         "definitionId": "us10.0f9061f7trial.luxasia2.invoicewf",
-        //          "context": {
-        //             gross_amount: grossAmount,
-        //             arrival_date: this.getView().byId("documentDate").getValue(),
-        //             departure_date: this.getView().byId("dueDate").getValue(),
-        //             invoice_number: invoiceNumber,
-        //             customer_name: "Teja",
-        //             managerapproval: false
-        //         }
-        //         // "context": {
-        //         //     "gross_amount": 1000,
-        //         //     "arrival_date": "2024-07-01",
-        //         //     "departure_date": "2024-07-01",
-        //         //     "invoice_number": 123,
-        //         //     "customer_name": "Teja",
-        //         //     "managerapproval": false
-        //         // }
-
-        //     };
-        
-        //     return new Promise((resolve, reject) => {
-        //         $.ajax({
-        //             url: url,
-        //             type: 'POST',
-        //             data: JSON.stringify(payload), // Stringify the payload
-        //             contentType: "application/json",
-        //             processData: false,
-        //             success: function (response) {
-        //                 resolve(response);
-        //             },
-        //             error: function (jqXHR, textStatus, errorThrown) {
-        //                 const errorMessage = "HTTP error, status = " + jqXHR.status;
-        //                 MessageBox.error("Error posting to DIE: " + errorMessage);
-        //                 reject(new Error(errorMessage));
-        //             }
-        //         });
-        //     });
-        // },
 
         onSave: function () {
             const url = this._getBaseUrlOfProcess() + "/public/workflow/rest/v1/workflow-instances";
             const grossAmount = parseFloat(this.getView().byId("grossAmount").getValue());
             const invoiceNumber = parseInt(this.getView().byId("documentNumber").getValue(), 10);
+
+           
             let payload = {
                 "definitionId": "us10.0f9061f7trial.luxasia2.invoicewf",
+                // "definitionId": "us10.10bb680ftrial.demo.invoiceprocess",
                 "context": {
                     gross_amount: grossAmount,
                     arrival_date: this.getView().byId("documentDate").getValue(),
@@ -162,6 +125,7 @@ sap.ui.define([
                 //     "customer_name": "Teja",
                 //     "managerapproval": false
                 // }
+                
             };
         
             // Assuming you are using jQuery for AJAX call
@@ -177,7 +141,10 @@ sap.ui.define([
                     sap.m.MessageBox.error("Failed to start the workflow.");
                 }
             });
-        },        
+        },   
+        
+     
+        
         
 
         _resetData: function () {

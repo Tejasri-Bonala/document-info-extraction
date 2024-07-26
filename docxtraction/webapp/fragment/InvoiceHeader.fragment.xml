@@ -43,6 +43,10 @@
 			<Input id="grossAmount" value="{invoice>/header/grossAmount}"
 			editable="{viewModel>/editable}"/> 
 
+			<Label text="{i18n>GST}" />
+			<Input id="taxamount" value="{invoice>/header/taxAmount}" 
+			editable="{viewModel>/editable}"/>        
+
 			<Label text="{i18n>Currency code}" />
 			<Input id="currencyCode" value="{invoice>/header/currencyCode}" 
 			editable="{viewModel>/editable}"/>                 

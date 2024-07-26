@@ -7,7 +7,9 @@
             "documentDate",
             "dueDate",
             "grossAmount",
+            "taxAmount",
             "currencyCode"
+            
         ],
         "lineItemFields": [
             "description",
@@ -17,5 +19,6 @@
             "netAmount"
         ]
     },
-    "documentType": "invoice"    
+    "documentType": "invoice", 
+    "schemaName" : "INVOICE"
 }

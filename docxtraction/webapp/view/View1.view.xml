@@ -109,7 +109,6 @@
                             description="{ListModel>status}"
                             iconDensityAware="false"
                             iconInset="false"
-                         
                         />
                     </List>
                 </l:VerticalLayout>
